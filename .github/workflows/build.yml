@@ -11,6 +11,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
 
@@ -19,19 +20,18 @@ jobs:
           distribution: temurin
           java-version: "17"
 
-      - name: Install Android SDK packages
+      - name: Install Android SDK
         uses: android-actions/setup-android@v3
 
       - name: Install SDK components
-        run: |
-          sdkmanager --install "platforms;android-35" "build-tools;35.0.0"
+        run: sdkmanager "platform-tools" "platforms;android-35" "build-tools;35.0.0"
 
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: "8.7"
 
       - name: Unpack project
-        run: unzip -q VoidMenu-Android-Project.zip
+        run: unzip -q -o VoidMenu-Android-Project.zip
 
       - name: Build APK
         run: cd VoidMenu && gradle assembleDebug
